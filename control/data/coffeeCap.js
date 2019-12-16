@@ -1,6 +1,7 @@
 // 咖啡胶囊的数据操作
 let query = require('../mysql')
 
+// 获取商品列表
 let getCoffCapLists = async () => {
   let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`aromaId` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`fragranceId` ORDER BY createTime DESC'
   let result = await query(sql).then((data) => {
@@ -13,12 +14,26 @@ let getCoffCapLists = async () => {
   return result
 }
 /**
+ * 判断商品是否存在
+ * @param {Number} data id 
+ */
+let isExist = async (data) => {
+  let sql = 'select * from coffeeCapsule where id = ?'
+  let result = await query(sql, data).then((data) => {
+    if (data.length > 0) {
+      return true //如果商品存在 返回 true
+    } else {
+      return false // 如果商品不存在 ，返回 false
+    }
+  })
+  return result
+}
+/**
  * 分页获取咖啡胶囊的数据
  * @param {*} data  [start count]
  */
 
 // 咖啡胶囊的筛选
-
 let getCoffeeCapList =async (data) => {
   let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` order by createTime desc limit ?, ?'
   let result = await query(sql, data).then((data) => {
@@ -378,5 +393,6 @@ module.exports = {
   getgoodsClass,
   getCoffCapamount,
   getCoffCaparoma,
-  getCoffCapClassification
+  getCoffCapClassification,
+  isExist
 }

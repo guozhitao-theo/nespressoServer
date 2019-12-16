@@ -4,7 +4,7 @@ let common = require('../common/common')
 let data = require('../control/data/data')
 
 // 配置 multer
-var Storage = multer.diskStorage({
+var coffeeCapStorage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null,'./static/')
   },
@@ -12,7 +12,7 @@ var Storage = multer.diskStorage({
     callback(null, 'coffeeCap/'+file.fieldname + "_" + Date.now() + "_" + file.originalname)
   }
 })
-var upload = multer({ storage: Storage }).array("img", 5); 
+var upload = multer({ storage: coffeeCapStorage }).array("img", 5); 
 // 获取咖啡胶囊列表
 let getCoffgCapLists = async (req, res) => {
   let result = await data.getCoffCapLists()
@@ -256,6 +256,14 @@ let deletecoffCap = async (req, res) => {
       message: '请输入id'
     })
   }
+  // 判断id 是否存在
+  let isExist = await data.isExist(id)
+  if (!isExist) {
+    return res.json({
+      status: 500,
+      message: '该商品不存在'
+    })
+  } 
   let result = await data.deleteCoffCap(id)
   console.log(result)
   if (result) {

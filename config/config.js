@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 // 数据库配置文件
 let mysqlConfig = {
-  host: 'localhost',
+  host: '192.168.97.240',
   port: 3306,
   user: 'root',
   password: 'root',
