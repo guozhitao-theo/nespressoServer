@@ -257,10 +257,11 @@ let deletecoffCap = async (req, res) => {
     })
   }
   let result = await data.deleteCoffCap(id)
+  console.log(result)
   if (result) {
     res.json({
       status: 200,
-      message: '删除成功'
+      message: '删除成功haha'
     })
   } else {
     res.json({

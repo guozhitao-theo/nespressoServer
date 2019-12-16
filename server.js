@@ -48,7 +48,7 @@ app.post('/getcMachineClass',router.getcMachineClass)
 
 // 添加订单
 app.post('/addUserOrder',router.addUserOrder)
-app.post('/payresult',router.payresult)
+app.get('/public',router.payresult)
 // 端口监听
 app.listen(3000,() => {
   console.log('port: 3000')

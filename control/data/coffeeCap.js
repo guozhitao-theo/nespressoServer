@@ -2,7 +2,7 @@
 let query = require('../mysql')
 
 let getCoffCapLists = async () => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` order by createTime desc'
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`aromaId` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`fragranceId` ORDER BY createTime DESC'
   let result = await query(sql).then((data) => {
     if(data.length > 0) {
       return data

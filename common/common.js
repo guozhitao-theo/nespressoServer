@@ -6,7 +6,7 @@ const config = require('../config/config')
 // 实例化对象
 let alipay = new AlipaySDK(config.alipayConfig)
 // PC支付接口 alipay.trade.page.pay 返回的内容为 表单
-let AlipayFormData = require('alipay-sdk/lib/form')
+let AlipayFormData = require('alipay-sdk/lib/form').default
 
 /**
  * 生成随机四位验证码
@@ -80,8 +80,10 @@ const createOrder = async (goods) => {
   }
   // 创建formData 对象
   const formData = new AlipayFormData()
+  // 调用 setMethod 并传入 get，会返回可以跳转到支付页面的 url
+  formData.setMethod('get');
   formData.addField('returnUrl','http://192.168.97.240:3000/public/') // 客户支付成功之后会同步跳回的地址
-  // formData.addField('notifyUrl','http://192.168.97.240:3000/public/')  // 支付宝在用户支付成功之后会异步通知的回调地址，必须在公网ip 才能收到
+  formData.addField('notifyUrl','http://192.168.97.240:3000/public/')  // 支付宝在用户支付成功之后会异步通知的回调地址，必须在公网ip 才能收到
   formData.addField('bizContent', bizContent); // 将必要的参数集合添加进 form 表单
 
   // 异步向支付宝 发送生成订单请求，第二个参数为公共参数，可以为空
