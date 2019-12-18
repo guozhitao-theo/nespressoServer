@@ -173,6 +173,13 @@ let addcoffCap = async (req, res) => {
       let discountPrice = req.body.discountPrice || req.query.discountPrice
       let taste = req.body.taste || req.query.taste
       let img = []
+      // 判断是否为咖啡胶囊
+      if (classification === 1) {
+        return res.json({
+          status: 500,
+          message: '请输入正确的分类，1 表示咖啡机， 2 表示咖啡胶囊'
+        })
+      }
       console.log(classification)
       console.log(name)
       console.log(title)

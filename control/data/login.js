@@ -63,9 +63,21 @@ const changeinfor = async (data) => {
   return result
 
 }
+const getUser = async () => {
+  let sql = 'select * from user'
+  let result = query(sql).then((data) => {
+    if (data.length > 0) {
+      return data
+    } else {
+      return false
+    }
+  })
+  return result
+}
 module.exports = {
   isRegisted,
   registe,
   login,
-  changeinfor
+  changeinfor,
+  getUser
 }

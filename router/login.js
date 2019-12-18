@@ -76,6 +76,7 @@ const register = async (req, res) => {
 }
 // 修改个人信息回调函数
 const changeInfor = async (req,res) => {
+  console.log(11111)
   let surname = req.body.surname || req.query.surname
   let name = req.body.name || req.query.name
   let email = req.body.email || req.query.email
@@ -90,6 +91,7 @@ const changeInfor = async (req,res) => {
   let arr = [surname, name, distributeclass, title, location, address,
     city, postCode, phone, shippingNotes, email]
   common.isempty(res, arr)
+  console.log(arr)
   if (!common.variPhone(phone)) {
     return res.json({
       status: 500,
@@ -183,6 +185,17 @@ const pwdUpdate = async (req,res) => {
 
 
 }
+// 获取用户列表
+const getUsers = async (req, res) => {
+  let result =await data.getUser()
+  if (result) {
+    res.json({
+      status: 200,
+      data: result,
+      message: '获取用户列表'
+    })
+  }
+}
 
 
 module.exports = {
@@ -191,5 +204,6 @@ module.exports = {
   changeInfor,
   login,
   islogin,
-  pwdUpdate
+  pwdUpdate,
+  getUsers
 }

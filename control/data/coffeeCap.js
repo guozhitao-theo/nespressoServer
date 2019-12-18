@@ -5,6 +5,7 @@ let query = require('../mysql')
 let getCoffCapLists = async () => {
   let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`aromaId` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`fragranceId` ORDER BY createTime DESC'
   let result = await query(sql).then((data) => {
+    console.log(data)
     if(data.length > 0) {
       return data
     } else {
@@ -35,7 +36,7 @@ let isExist = async (data) => {
 
 // 咖啡胶囊的筛选
 let getCoffeeCapList =async (data) => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` order by createTime desc limit ?, ?'
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`aromaId` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`fragranceId` order by createTime desc limit ?, ?'
   let result = await query(sql, data).then((data) => {
     if(data.length > 0) {
       return data
@@ -50,7 +51,7 @@ let getCoffeeCapList =async (data) => {
  * @param {Number} data 'coffeeClassification' 
  */
 let getCoffeeCapByClass =async  (data) => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` WHERE fragrance.id = ?'
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.aromaId LEFT JOIN fragrance ON aroma.fragrance = fragrance.fragranceId WHERE fragrance.fragranceId = ?'
   let result = await query(sql, data).then((data) => {
     if (data) {
       return data
@@ -140,7 +141,7 @@ let getCoffByClassCapAmount =async  (data) => {
  * @param {arr} data ['分类','香调']
  */
 let getCoffByClassAroma =async  (data) => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` WHERE cCap.coffeeClassification=? && fragrance.id = ? '
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.aromaId LEFT JOIN fragrance ON aroma.fragrance = fragrance.fragranceId WHERE cCap.coffeeClassification=? && fragrance.fragranceId = ? '
   let result = await query(sql, data).then((data) => {
     if (data) {
       return data
@@ -155,7 +156,7 @@ let getCoffByClassAroma =async  (data) => {
  * @param {arr} data ['咖啡强度','香调']
  */
 let getCoffByStrengthAroma  =async  (data) => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` WHERE cCap.strength=? && fragrance.id = ? '
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.aromaId LEFT JOIN fragrance ON aroma.fragrance = fragrance.fragranceId WHERE cCap.strength=? && fragrance.fragranceId = ? '
   let result = await query(sql, data).then((data) => {
     if (data) {
       return data
@@ -170,7 +171,7 @@ let getCoffByStrengthAroma  =async  (data) => {
  * @param {arr} data ['咖啡强度','杯量']
  */
 let getCoffByStrengthCapacount  =async  (data) => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` WHERE cCap.strength=? && cCap.capAmount = ? '
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.aromaId LEFT JOIN fragrance ON aroma.fragrance = fragrance.fragranceId WHERE cCap.strength=? && cCap.capAmount = ? '
   let result = await query(sql, data).then((data) => {
     if (data) {
       return data
@@ -185,7 +186,7 @@ let getCoffByStrengthCapacount  =async  (data) => {
  * @param {arr} data ['香调','杯量']
  */
 let getCoffByAromaCapacount  =async  (data) => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` WHERE fragrance.id = ? && cCap.capAmount = ? '
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.aromaId LEFT JOIN fragrance ON aroma.fragrance = fragrance.fragranceId WHERE fragrance.fragranceId = ? && cCap.capAmount = ? '
   let result = await query(sql, data).then((data) => {
     if (data) {
       return data
@@ -200,7 +201,7 @@ let getCoffByAromaCapacount  =async  (data) => {
  * @param {arr} data ['分类','强度','香调']
  */
 let getCoffByClassStrengthAroma  =async  (data) => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` WHERE coffeeClassification = ? && strength = ? && fragrance.id = ?'
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.aromaId LEFT JOIN fragrance ON aroma.fragrance = fragrance.fragranceId WHERE coffeeClassification = ? && strength = ? && fragrance.fragranceId = ?'
   let result = await query(sql, data).then((data) => {
     if (data) {
       return data
@@ -215,7 +216,7 @@ let getCoffByClassStrengthAroma  =async  (data) => {
  * @param {arr} data ['分类','强度','杯量']
  */
 let getCoffByClassStrengthCapamount =async  (data) => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` WHERE coffeeClassification = ? && strength = ? && capAmount = ?'
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.aromaId LEFT JOIN fragrance ON aroma.fragrance = fragrance.fragranceId WHERE coffeeClassification = ? && strength = ? && capAmount = ?'
   let result = await query(sql, data).then((data) => {
     if (data) {
       return data
@@ -230,7 +231,7 @@ let getCoffByClassStrengthCapamount =async  (data) => {
  * @param {arr} data ['分类','香调','杯量']
  */
 let getCoffByClassAromaCapamount =async  (data) => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` WHERE coffeeClassification = ? && fragrance.id = ? && capAmount = ?'
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.aromaId LEFT JOIN fragrance ON aroma.fragrance = fragrance.fragranceId WHERE coffeeClassification = ? && fragrance.fragranceId = ? && capAmount = ?'
   let result = await query(sql, data).then((data) => {
     if (data) {
       return data
@@ -245,7 +246,7 @@ let getCoffByClassAromaCapamount =async  (data) => {
  * @param {arr} data ['分类','强度','香调','杯量']
  */
 let getCoffByClassStrengthAromaCapamount =async  (data) => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` WHERE coffeeClassification = ? && strength=? && fragrance.id = ? && capAmount = ?'
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.aromaId LEFT JOIN fragrance ON aroma.fragrance = fragrance.fragranceId WHERE coffeeClassification = ? && strength=? && fragrance.fragranceId = ? && capAmount = ?'
   let result = await query(sql, data).then((data) => {
     if (data) {
       return data
@@ -260,7 +261,7 @@ let getCoffByClassStrengthAromaCapamount =async  (data) => {
  * @param {arr} data ['强度','香调','杯量']
  */
 let getCoffByStrengthAromaCapamount =async  (data) => {
-  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` WHERE strength=? && fragrance.id = ? && capAmount = ?'
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.aromaId LEFT JOIN fragrance ON aroma.fragrance = fragrance.fragranceId WHERE strength=? && fragrance.fragranceId = ? && capAmount = ?'
   let result = await query(sql, data).then((data) => {
     if (data) {
       return data

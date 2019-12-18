@@ -24,6 +24,7 @@ app.post('/login', router.login)
 app.post('/islogin', router.islogin)
 app.post('/changeInfor', router.changeInfor)
 app.post('/pwdUpdate', router.pwdUpdate)
+app.post('/getUsers',router.getUsers)
 
 // 咖啡胶囊的接口
 app.post('/getcoffeeCap', router.getcoffeeCap)
