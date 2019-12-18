@@ -219,6 +219,13 @@ let updatecoffCap = async (req, res) => {
       })
     } else {
       let id = Number(req.body.id || req.query.id)
+      let getcoffCap = await data.getCoffCapById(id)
+      if (!getcoffCap) {
+        return res.json ({
+          status: 500,
+          message: '该商品不存在'
+        })
+      }
       let classification = Number(req.body.classification || req.query.classification)
       let name = req.body.name || req.query.name
       let title = req.body.title || req.query.title
@@ -236,9 +243,42 @@ let updatecoffCap = async (req, res) => {
       let price = req.body.price || req.query.price
       let discountPrice = req.body.discountPrice || req.query.discountPrice
       let taste = req.body.taste || req.query.taste
-      let img = req.files[0].filename
-      let arr = [classification, name, title, img, description, bakingDescription, placefOrigin, strength, capAmount, aroma, acidity, bitterness, alcohol, degreeofBaking, coffeeClassification, price, discountPrice, taste, id]
-      common.isempty(res,arr)
+      if( req.files.length > 0) {
+        var img = req.files[0].filename
+      }
+      // 定义一个对象存放传过来的数据
+      let getObject = {
+        classification: classification,
+        name: name,
+        title: title,
+        description: description,
+        bakingDescription: bakingDescription,
+        placefOrigin: placefOrigin,
+        strength: strength,
+        capAmount: capAmount,
+        aroma: aroma,
+        acidity: acidity,
+        bitterness: bitterness,
+        alcohol: alcohol,
+        degreeofBaking: degreeofBaking,
+        coffeeClassification: coffeeClassification,
+        price: price,
+        discountPrice: discountPrice,
+        taste: taste,
+        img
+      }
+      // 遍历对象，当其键值对的值为undefined 的时候删除这个键值对
+      for (props in getObject) {
+        if (getObject[props] === undefined) {
+          delete getObject[props]
+        }
+      }
+      // 删除原数据中的时间戳
+      delete getcoffCap[0].createTime
+      let changeCoffeeCap = Object.assign({},getcoffCap[0],getObject)
+      let arr = Object.values(changeCoffeeCap)
+      arr.splice(0,1)
+      arr.push(id)
       let result =await data.updateCoffCap(arr)
       if (result) {
         res.json({

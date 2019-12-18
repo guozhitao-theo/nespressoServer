@@ -5,11 +5,25 @@ let query = require('../mysql')
 let getCoffCapLists = async () => {
   let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`aromaId` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`fragranceId` ORDER BY createTime DESC'
   let result = await query(sql).then((data) => {
-    console.log(data)
     if(data.length > 0) {
       return data
     } else {
       return false 
+    }
+  })
+  return result
+}
+/**
+ * 通过id 查询商品
+ * @param {Number} data id 
+ */
+let getCoffCapById = async (data) => {
+  let sql = 'select * from coffeecapsule where id=?'
+  let result = query(sql, data).then((data) => {
+    if (data.length > 0) {
+      return data
+    } else {
+      return false
     }
   })
   return result
@@ -303,9 +317,11 @@ let addCoffcap = async (data) => {
  * @param {arr} data 
  */
 let updateCoffCap = async (data) => {
-  let sql = 'update coffeeCapsule set classification=?, NAME=?, title=?,  img=?, description=?, bakingDescription=?, placefOrigin=?, strength=?, capAmount=?, aroma=?, acidity=?, bitterness=?, alcohol=?, degreeofBaking=?, coffeeClassification=?, price=?, discountPrice=?, taste=? where id=?'
-  let result = query(sql,data).then((data) => {
+  console.log(data)
+  let sql = 'update coffeecapsule set classification=?, NAME=?, title=?,  img=?, description=?, bakingDescription=?, placefOrigin=?, strength=?, capAmount=?, aroma=?, acidity=?, bitterness=?, alcohol=?, degreeofBaking=?, coffeeClassification=?, price=?, discountPrice=?, taste=? where id=?'
+  let result =await query(sql,data).then((data) => {
     if (data) {
+      console.log(data)
       return true
     } else {
       return false
@@ -395,5 +411,6 @@ module.exports = {
   getCoffCapamount,
   getCoffCaparoma,
   getCoffCapClassification,
-  isExist
+  isExist,
+  getCoffCapById
 }

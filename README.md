@@ -469,7 +469,7 @@
 | placefOrigin         | string | 中国       | 咖啡原产地                                                   |
 | strength             | int    | 1          | 咖啡的强度（1-12级）                                         |
 | capAmount            | int    | 1          | 咖啡杯量（1-12级）                                           |
-| aroma                | int    | 2          | 咖啡香调（1-3）                                              |
+| aroma                | int    | 2          | 咖啡香调（1-12）                                             |
 | acidity              | int    | 3          | 咖啡酸度（1-12级）                                           |
 | bitterness           | int    | 4          | 咖啡苦度（1-12级）                                           |
 | alcohol              | int    | 1          | 醇厚度（1-12级）                                             |
@@ -493,7 +493,7 @@
 
 ### 	 类型： ==from-data==
 
-==前端需要发送的字段==：
+==前端需要发送的字段==：可传其中某个字段或者不传
 
 | Key                  | Type   | Value 示例 | Description                                                  |
 | -------------------- | ------ | ---------- | ------------------------------------------------------------ |
@@ -547,14 +547,449 @@
 
 
 
+### 13.  获取商品分类接口：http://192.168.97.240:3000/getgoodsClass
+
+​		==后台返回数据：==  
+
+~~~javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 1,
+            "commodityName": "咖啡机"
+        },
+        {
+            "id": 2,
+            "commodityName": "咖啡胶囊"
+        }
+    ],
+    "message": "获取商品分类成功"
+}
+~~~
+
+### 14.  获取咖啡杯量接口：http://192.168.97.240:3000/getCoffCapamount
+
+​		==后台返回数据：==
+
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 1,
+            "amount": "小杯(25ml)"
+        },
+        {
+            "id": 2,
+            "amount": "中杯(40ml)"
+        },
+        {
+            "id": 3,
+            "amount": "大杯(80ml)"
+        },
+        {
+            "id": 4,
+            "amount": "超大杯(110ml)"
+        }
+    ],
+    "message": "获取咖啡杯量成功"
+}
+```
+
+### 15.  获取咖啡香调接口：http://192.168.97.240:3000/getCoffCaparoma
+
+​		==后台返回数据：==
+
+  ```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "aromaId": 1,
+            "value": "果香/酒香",
+            "fragrance": 1,
+            "descript": "果香/酒香 的描述"
+        },
+        {
+            "aromaId": 2,
+            "value": "花香",
+            "fragrance": 1,
+            "descript": "花香 的描述"
+        },
+        {
+            "aromaId": 3,
+            "value": "柑橘香",
+            "fragrance": 1,
+            "descript": "柑橘香 的描述"
+        },
+        {
+            "aromaId": 4,
+            "value": "饼干香",
+            "fragrance": 2,
+            "descript": "饼干香的描述"
+        },
+        {
+            "aromaId": 5,
+            "value": "谷物香",
+            "fragrance": 2,
+            "descript": "谷物香 的描述"
+        },
+        {
+            "aromaId": 6,
+            "value": "烘焙香",
+            "fragrance": 2,
+            "descript": "烘焙香的描述"
+        },
+        {
+            "aromaId": 7,
+            "value": "蜂蜜香",
+            "fragrance": 2,
+            "descript": "蜂蜜香的描述"
+        },
+        {
+            "aromaId": 8,
+            "value": "辛辣香",
+            "fragrance": 3,
+            "descript": "辛辣香的描述"
+        },
+        {
+            "aromaId": 9,
+            "value": "麦芽香",
+            "fragrance": 3,
+            "descript": "麦芽香的描述"
+        },
+        {
+            "aromaId": 10,
+            "value": "木本香",
+            "fragrance": 3,
+            "descript": "木本香的描述"
+        },
+        {
+            "aromaId": 11,
+            "value": "可可香",
+            "fragrance": 3,
+            "descript": "可可香的描述"
+        },
+        {
+            "aromaId": 12,
+            "value": "深度烘焙",
+            "fragrance": 3,
+            "descript": "深度烘焙的描述"
+        }
+    ],
+    "message": "获取香调成功"
+}
+  ```
+
+### 16.  获取咖啡分类接口：http://192.168.97.240:3000/getCoffCapClassification
+
+​		==后台返回数据：==
+
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 1,
+            "className": "浓烈咖啡",
+            "descript": "浓烈咖啡的描述"
+        },
+        {
+            "id": 2,
+            "className": "浓缩咖啡",
+            "descript": "浓烈咖啡的描述"
+        },
+        {
+            "id": 3,
+            "className": "大杯咖啡",
+            "descript": "大杯咖啡的描述"
+        },
+        {
+            "id": 4,
+            "className": "低咖啡因咖啡",
+            "descript": "低咖啡因咖啡描述"
+        },
+        {
+            "id": 5,
+            "className": "风味咖啡",
+            "descript": "风味咖啡描述"
+        },
+        {
+            "id": 6,
+            "className": "大师匠心之作",
+            "descript": "大师匠心之作的描述"
+        }
+    ],
+    "message": "获取咖啡的分类"
+}
+```
+
+### 17.  分页获取咖啡胶囊接口：http://192.168.97.240:3000/getcoffeeCap
+
+### 	 类型：  ==x-www-form-urlencoded==
+
+==前端需要发送的字段==：
+
+| Key   | Type | Value 示例 | Description |
+| ----- | ---- | ---------- | ----------- |
+| page  | int  | 1          | 页码        |
+| count | int  | 2          | 数量        |
+
+​		==后台返回数据：==
+
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 59,
+            "classification": 2,
+            "name": "拿铁111",
+            "title": "你去看人家的哇嘎也",
+            "img": "[\"coffeeCap/img_1576661189875_002.jpg\",\"coffeeCap/img_1576661189876_007.jpg\",\"coffeeCap/img_1576661190209_008.jpg\"]",
+            "description": "娃娃啊",
+            "bakingDescription": "烘焙",
+            "placefOrigin": "中国",
+            "strength": 1,
+            "capAmount": 1,
+            "aroma": 12,
+            "acidity": 3,
+            "bitterness": 4,
+            "alcohol": 1,
+            "degreeofBaking": 3,
+            "coffeeClassification": 6,
+            "price": 120.1,
+            "discountPrice": 120,
+            "taste": "121211",
+            "createTime": "2019-12-18T09:26:30.000Z",
+            "aromaId": 12,
+            "value": "浓烈系列",
+            "fragrance": 3,
+            "descript": "浓烈系列的描述",
+            "fragranceId": 3
+        },
+        {
+            "id": 54,
+            "classification": 2,
+            "name": "拿铁111",
+            "title": "你去看人家的哇嘎也",
+            "img": "[\"coffeeCap/img_1576635518748_002.jpg\",\"coffeeCap/img_1576635518749_007.jpg\",\"coffeeCap/img_1576635518776_008.jpg\"]",
+            "description": "娃娃啊",
+            "bakingDescription": "烘焙",
+            "placefOrigin": "中国",
+            "strength": 1,
+            "capAmount": 1,
+            "aroma": 2,
+            "acidity": 3,
+            "bitterness": 4,
+            "alcohol": 1,
+            "degreeofBaking": 3,
+            "coffeeClassification": 6,
+            "price": 120.1,
+            "discountPrice": 120,
+            "taste": "121211",
+            "createTime": "2019-12-18T02:18:38.000Z",
+            "aromaId": 2,
+            "value": "果香型",
+            "fragrance": 1,
+            "descript": "果香型的描述",
+            "fragranceId": 1
+        }
+    ],
+    "message": "分类查询成功"
+}
+```
+
+# 咖啡机
+
+### 18.  获取咖啡机列表接口：http://192.168.97.240:3000/getCoffeeMachineLists
+
+​		==后台返回数据：==  
+
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 1,
+            "npsCommodity": 1,
+            "color": 2,
+            "img": "[\"coffeeMachine/coffeeMachineimg_1576197909849_005.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909852_006.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909853_007.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909966_008.jpg\"]",
+            "price": 12.1,
+            "discountPrice": 14.1,
+            "specifications": 1,
+            "manual": "说明书的连接",
+            "createTime": "2019-12-13T00:45:09.000Z",
+            "cmachineclass": 1,
+            "name": "咖啡机112",
+            "commodityName": "咖啡机",
+            "value": "白色",
+            "weight": "5kg",
+            "capacity": "500ml",
+            "size": "15*70*20",
+            "pressure": "50pa",
+            "auto_shoutD": "0",
+            "water_tank": "1",
+            "height_pressure_extraction": "1",
+            "origin": "中国",
+            "app_connection": "1",
+            "milk_form_system": "1",
+            "cupAmount": 1,
+            "preheatTime": "70s"
+        },
+        {
+            "id": 1,
+            "npsCommodity": 1,
+            "color": 2,
+            "img": "[\"coffeeMachine/coffeeMachineimg_1576562297634_005.jpg\",\"coffeeMachine/coffeeMachineimg_1576562297635_006.jpg\",\"coffeeMachine/coffeeMachineimg_1576562297635_007.jpg\",\"coffeeMachine/coffeeMachineimg_1576562297752_008.jpg\"]",
+            "price": 12.1,
+            "discountPrice": 14.1,
+            "specifications": 1,
+            "manual": "说明书的连接",
+            "createTime": "2019-12-17T05:58:17.000Z",
+            "cmachineclass": 1,
+            "name": "咖啡机1122",
+            "commodityName": "咖啡机",
+            "value": "白色",
+            "weight": "5kg",
+            "capacity": "500ml",
+            "size": "15*70*20",
+            "pressure": "50pa",
+            "auto_shoutD": "0",
+            "water_tank": "1",
+            "height_pressure_extraction": "1",
+            "origin": "中国",
+            "app_connection": "1",
+            "milk_form_system": "1",
+            "cupAmount": 1,
+            "preheatTime": "70s"
+        }
+    ],
+    "message": "获取咖啡机列表成功"
+}
+```
+
+### 19.  分页获取咖啡机接口：http://192.168.97.240:3000/getCoffeeMachineBypage
+
+### 	 类型：  ==x-www-form-urlencoded==
+
+==前端需要发送的字段==：
+
+| Key   | Type | Value 示例 | Description    |
+| ----- | ---- | ---------- | -------------- |
+| page  | int  | 1          | 咖啡机的页码   |
+| count | int  | 1          | 咖啡机单页数量 |
+
+​		==后台返回数据：==  
+
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 59,
+            "classification": 2,
+            "name": "拿铁111",
+            "title": "你去看人家的哇嘎也",
+            "img": "[\"coffeeCap/img_1576661189875_002.jpg\",\"coffeeCap/img_1576661189876_007.jpg\",\"coffeeCap/img_1576661190209_008.jpg\"]",
+            "description": "娃娃啊",
+            "bakingDescription": "烘焙",
+            "placefOrigin": "中国",
+            "strength": 1,
+            "capAmount": 1,
+            "aroma": 12,
+            "acidity": 3,
+            "bitterness": 4,
+            "alcohol": 1,
+            "degreeofBaking": 3,
+            "coffeeClassification": 6,
+            "price": 120.1,
+            "discountPrice": 120,
+            "taste": "121211",
+            "createTime": "2019-12-18T09:26:30.000Z",
+            "aromaId": 12,
+            "value": "浓烈系列",
+            "fragrance": 3,
+            "descript": "浓烈系列的描述",
+            "fragranceId": 3
+        }
+    ],
+    "message": "分类查询成功"
+}
+```
+
+### 20.  获取咖啡机列表接口：http://192.168.97.240:3000/getCoffeeMachineLists
+
+​		==后台返回数据：== 
+
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 1,
+            "npsCommodity": 1,
+            "color": 2,
+            "img": "[\"coffeeMachine/coffeeMachineimg_1576197909849_005.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909852_006.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909853_007.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909966_008.jpg\"]",
+            "price": 12.1,
+            "discountPrice": 14.1,
+            "specifications": 1,
+            "manual": "说明书的连接",
+            "createTime": "2019-12-13T00:45:09.000Z",
+            "cmachineclass": 1,
+            "name": "咖啡机112",
+            "commodityName": "咖啡机",
+            "value": "白色",
+            "weight": "5kg",
+            "capacity": "500ml",
+            "size": "15*70*20",
+            "pressure": "50pa",
+            "auto_shoutD": "0",
+            "water_tank": "1",
+            "height_pressure_extraction": "1",
+            "origin": "中国",
+            "app_connection": "1",
+            "milk_form_system": "1",
+            "cupAmount": 1,
+            "preheatTime": "70s"
+        },
+        {
+            "id": 1,
+            "npsCommodity": 1,
+            "color": 2,
+            "img": "[\"coffeeMachine/coffeeMachineimg_1576562297634_005.jpg\",\"coffeeMachine/coffeeMachineimg_1576562297635_006.jpg\",\"coffeeMachine/coffeeMachineimg_1576562297635_007.jpg\",\"coffeeMachine/coffeeMachineimg_1576562297752_008.jpg\"]",
+            "price": 12.1,
+            "discountPrice": 14.1,
+            "specifications": 1,
+            "manual": "说明书的连接",
+            "createTime": "2019-12-17T05:58:17.000Z",
+            "cmachineclass": 1,
+            "name": "咖啡机1122",
+            "commodityName": "咖啡机",
+            "value": "白色",
+            "weight": "5kg",
+            "capacity": "500ml",
+            "size": "15*70*20",
+            "pressure": "50pa",
+            "auto_shoutD": "0",
+            "water_tank": "1",
+            "height_pressure_extraction": "1",
+            "origin": "中国",
+            "app_connection": "1",
+            "milk_form_system": "1",
+            "cupAmount": 1,
+            "preheatTime": "70s"
+        }
+    ],
+    "message": "获取咖啡机列表成功"
+}
+```
 
 
 
 
-## 咖啡机
-
-
-### 20.  添加咖啡机接口：http://192.168.97.240:3000/addCoffeeMachine
+### 21.  添加咖啡机接口：http://192.168.97.240:3000/addCoffeeMachine
 
 ### 	 类型： ==from-data==
 
@@ -581,7 +1016,7 @@
 }
 ~~~
 
-### 21.  修改咖啡机接口：http://192.168.97.240:3000/updateCoffeeMachine
+### 22.  修改咖啡机接口：http://192.168.97.240:3000/updateCoffeeMachine
 
 ### 	 类型： ==from-data==
 
