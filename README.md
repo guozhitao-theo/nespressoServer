@@ -468,7 +468,7 @@
 | bakingDescription    | string | 烘焙的描述 | 烘焙的描述                                                   |
 | placefOrigin         | string | 中国       | 咖啡原产地                                                   |
 | strength             | int    | 1          | 咖啡的强度（1-12级）                                         |
-| capAmount            | int    | 1          | 咖啡杯量（1-12级）                                           |
+| capAmount            | int    | 1          | 咖啡杯量（1-4）                                              |
 | aroma                | int    | 2          | 咖啡香调（1-12）                                             |
 | acidity              | int    | 3          | 咖啡酸度（1-12级）                                           |
 | bitterness           | int    | 4          | 咖啡苦度（1-12级）                                           |
@@ -801,6 +801,8 @@
 }
 ```
 
+
+
 # 咖啡机
 
 ### 18.  获取咖啡机列表接口：http://192.168.97.240:3000/getCoffeeMachineLists
@@ -812,7 +814,7 @@
     "status": 200,
     "data": [
         {
-            "id": 1,
+            "cmachineproductsId": 1,
             "npsCommodity": 1,
             "color": 2,
             "img": "[\"coffeeMachine/coffeeMachineimg_1576197909849_005.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909852_006.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909853_007.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909966_008.jpg\"]",
@@ -839,7 +841,7 @@
             "preheatTime": "70s"
         },
         {
-            "id": 1,
+            "cmachineproductsId": 1,
             "npsCommodity": 1,
             "color": 2,
             "img": "[\"coffeeMachine/coffeeMachineimg_1576562297634_005.jpg\",\"coffeeMachine/coffeeMachineimg_1576562297635_006.jpg\",\"coffeeMachine/coffeeMachineimg_1576562297635_007.jpg\",\"coffeeMachine/coffeeMachineimg_1576562297752_008.jpg\"]",
@@ -888,7 +890,7 @@
     "status": 200,
     "data": [
         {
-            "id": 59,
+            "cmachineproductsId": 59,
             "classification": 2,
             "name": "拿铁111",
             "title": "你去看人家的哇嘎也",
@@ -928,7 +930,7 @@
     "status": 200,
     "data": [
         {
-            "id": 1,
+            "cmachineproductsId": 1,
             "npsCommodity": 1,
             "color": 2,
             "img": "[\"coffeeMachine/coffeeMachineimg_1576197909849_005.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909852_006.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909853_007.jpg\",\"coffeeMachine/coffeeMachineimg_1576197909966_008.jpg\"]",
@@ -998,7 +1000,7 @@
 | Key              | Type   | Value 示例       | Description    |
 | ---------------- | ------ | ---------------- | -------------- |
 | npsCommodity     | int    | 1                | 商品分类 0-1   |
-| color            | int    | 2                | 咖啡机颜色 1-7 |
+| color            | int    | 2                | 咖啡机颜色 1-8 |
 | price            | double | 12.1             | 价格           |
 | discountPrice    | double | 12.1             | 折后价         |
 | specifications   | int    | 1                | 规格           |
@@ -1042,4 +1044,157 @@
   "message": "修改信息成功"
 }
 ~~~
+
+### 23.  删除咖啡机接口：http://192.168.97.240:3000/deleteCoffeeMachine
+
+### 	 类型：==x-www-form-urlencoded==
+
+==前端需要发送的字段==：
+
+| Key  | Type | Value 示例 | Description        |
+| ---- | ---- | ---------- | ------------------ |
+| id   | int  | 1          | 要删除的咖啡机的id |
+
+​		==后台返回数据：==  
+
+```javascript
+{
+    "status": 500,
+    "message": "这个id的商品不存在"
+}
+```
+
+### 24.  获取咖啡机规格：http://192.168.97.240:3000/getspecifications
+
+### 	 		==后台返回数据：==  
+
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 1,
+            "weight": "5kg",
+            "capacity": "500ml",
+            "size": "15*70*20",
+            "pressure": "50pa",
+            "auto_shoutD": "0",
+            "water_tank": "1",
+            "height_pressure_extraction": "1",
+            "origin": "中国",
+            "app_connection": "1",
+            "milk_form_system": "1",
+            "cupAmount": 1,
+            "preheatTime": "70s"
+        },
+        {
+            "id": 2,
+            "weight": "5kg",
+            "capacity": "500ml",
+            "size": "15*70*20",
+            "pressure": "50pa",
+            "auto_shoutD": "0",
+            "water_tank": "1",
+            "height_pressure_extraction": "1",
+            "origin": "中国",
+            "app_connection": "1",
+            "milk_form_system": "1",
+            "cupAmount": 1,
+            "preheatTime": "70s"
+        },
+        {
+            "id": 3,
+            "weight": "5kg",
+            "capacity": "500ml",
+            "size": "15*70*20",
+            "pressure": "50pa",
+            "auto_shoutD": "0",
+            "water_tank": "1",
+            "height_pressure_extraction": "1",
+            "origin": "中国",
+            "app_connection": "1",
+            "milk_form_system": "1",
+            "cupAmount": 1,
+            "preheatTime": "70s"
+        }
+    ],
+    "message": "获取咖啡机规格成功"
+}
+```
+
+### 25.  获取咖啡机规格：http://192.168.97.240:3000/getcMachineClass
+
+### 	 		==后台返回数据：==  
+
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 1,
+            "name": "牛奶和拿铁的咖啡机",
+            "title": "牛奶和拿铁的咖啡机",
+            "descript": "使用Basista一样的定制设置来创建各种咖啡和牛奶配方或通过一键触控系统，让自己沉醉在 Creatista or Lattissima制作的咖啡品享中。购买咖啡机"
+        },
+        {
+            "id": 2,
+            "name": "方便快捷的浓缩咖啡机",
+            "title": "方便快捷的浓缩咖啡",
+            "descript": "选择方便快捷简单操作直观的咖啡机。不妨了解下 Pixie, Pixie Clips, Essenza Mini, Inissia, Citiz "
+        },
+        {
+            "id": 3,
+            "name": "个性化的浓缩咖啡机机",
+            "title": "个性化的浓缩咖啡机机",
+            "descript": "想象自己是一个专业的咖啡师？用Creatista或者连接Nespresso Expert 咖啡机在家就可以制备一杯个性化的咖啡"
+        }
+    ],
+    "message": "获取咖啡机分类成功"
+}
+```
+
+### 26.  按颜色获取咖啡机：http://192.168.97.240:3000/getCoffeeMachineByColor
+
+==前端需要发送的字段==：
+
+| Key   | Type | Value 示例 | Description                                                  |
+| ----- | ---- | ---------- | ------------------------------------------------------------ |
+| color | int  | 1          | 颜色对应的数字<br />1 红色<br />2 白色<br />3 黑色<br />4 灰色<br />5 黄色<br />6 绿色<br />7 米黄色<br />8 深红色（红棕色） |
+
+​		==后台返回数据：==  
+
+```javascript
+{
+    "status": 500,
+    "message": "该颜色无对应商品"
+}
+```
+
+# 订单
+
+### 26.  添加订单：http://192.168.97.240:3000/addUserOrder
+
+==前端需要发送的字段==：
+
+| Key    | Type   | Value 示例                                        | Description                                                  |
+| ------ | ------ | ------------------------------------------------- | ------------------------------------------------------------ |
+| userId | int    | 1                                                 | 用户id                                                       |
+| status | int    | 1                                                 | 订单状态                                                     |
+| goods  | string | [{"npscommodity":43,"commodity":2,"quantity":10}] | 传数组转成 的json字符串<br />对象中为一个商品，多个对象为多个商品，商品不能重复，<br />npscommodity：商品的id<br />commodity: 商品分类<br />quantity：商品数量 |
+
+​		==后台返回数据：==  
+
+```javascript
+{
+    "status": 200,
+    "result": "https://openapi.alipaydev.com/gateway.do?method=alipay.trade.page.pay&app_id=2016101500692746&charset=utf-8&version=1.0&sign_type=RSA2&timestamp=2019-12-19%2012%3A12%3A51&return_url=http%3A%2F%2F192.168.97.240%3A3000%2Fpublic%2F&notify_url=http%3A%2F%2F192.168.97.240%3A3000%2Fpublic%2F&sign=c1uSdBCjt5FEKJ6i1mekHvvu%2FzWMQHg8TBFZwTTeRL%2FdIi%2BADAPw%2BcSSFwUiuITK3K2iQe1qC2P13VxHcaTXOHjDRg4X6QADauYfbzfxhE2Jh%2B0%2Bkv4AlqGQC7r65b55mlqlOzjvSaTwWiOtrQzwhRghjBeBxeObh5gbjcp%2BDWiRjo7C7fxTf4OVqjujVqCUcMy6Sh2ENo6mJwrveXbwBOhiZv%2FAO8DXxgbPZtxS8Byvn%2FWKZr5AwmQCxiajKvBGnUc3fOihSoeeXyWMTrSjtONkUOcpcDFH0SAytHlUNse22bsxAWiESlZEUmIqX6HDW%2BH9MP4Ae4hyhtGxWZcDIw%3D%3D&alipay_sdk=alipay-sdk-nodejs-3.0.8&biz_content=%7B%22out_trade_no%22%3A1576728771624%2C%22product_code%22%3A%22FAST_INSTANT_TRADE_PAY%22%2C%22total_amount%22%3A1200%2C%22subject%22%3A%22%E8%AE%A2%E5%8D%95%E5%90%8D%E7%A7%B0%22%2C%22timeout_express%22%3A%225m%22%2C%22passback_params%22%3A%22%7B%5C%22userId%5C%22%3A%5C%221%5C%22%2C%5C%22status%5C%22%3A%5C%221%5C%22%2C%5C%22goods%5C%22%3A%5C%22%5B%7B%5C%5C%5C%22npscommodity%5C%5C%5C%22%3A43%2C%5C%5C%5C%22commodity%5C%5C%5C%22%3A2%2C%5C%5C%5C%22quantity%5C%5C%5C%22%3A10%7D%5D%5C%22%7D%22%7D",
+    "data": {
+        "allTotal": 1200,
+        "orderNumber": 1576728771624
+    },
+    "message": "添加订单成功"
+}
+```
+
+跳转链接为==result==的值
 

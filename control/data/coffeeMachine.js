@@ -29,6 +29,18 @@ let getCoffeeMachineBypage = async (data) => {
   })
   return result   
 }
+let getCoffeeMachineByColor = async (data) => {
+  let sql = 'select * from cmachineproducts where color = ?'
+  let result = query(sql, data).then((data) => {
+    if(data.length>0) {
+      return data
+    } else {
+      return false
+    }
+  })
+  return result
+}
+
 /**
  * 添加咖啡机商品列表
  * @param {arr} data npsCommodity(int), color(int), img(varchar), price(double), discountPrice(double), specifications(int), manual(varchar), cmachineclass(int), NAME(varchar)
@@ -43,6 +55,21 @@ let addCoffeeMachine = async (data) => {
     }
   }).catch((err) =>{
     return err
+  })
+  return result
+}
+/**
+ * 通过咖啡机的id获取咖啡机的信息
+ * @param {int} data  id
+ */
+let getCoffMachineById = async (data) => {
+  let sql = 'select * from cmachineproducts where cmachineproductsId = ?'
+  let result = await query(sql, data).then((data) => {
+    if (data.length > 0) {
+      return data
+    } else {
+      return false
+    }
   })
   return result
 }
@@ -68,8 +95,8 @@ let updateCoffeeMachine = async (data) => {
  * @param {Number} data id(int) 
  */
 let deleteCoffeeMachine = async (data) => {
-  let sql = 'delete from cmachineproducts where id =?'
-  let result = query(sql, data).then((data) => {
+  let sql = 'delete from cmachineproducts where cmachineproductsId =?'
+  let result =await query(sql, data).then((data) => {
     if(data){
       return true
     } else {
@@ -113,5 +140,7 @@ module.exports = {
   updateCoffeeMachine,
   deleteCoffeeMachine,
   getspecifications,
-  getcMachineClass
+  getcMachineClass,
+  getCoffMachineById,
+  getCoffeeMachineByColor
 }

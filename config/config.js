@@ -21,9 +21,9 @@ let emailConfig = {
 // 支付宝配置文件
 
 // 文件读取 应用私钥
-let appPrivateKey = fs.readFileSync(path.join(__dirname,'../sendbox_pem/private_app2048.txt'),'ascii')
+let appPrivateKey = fs.readFileSync(path.join(__dirname,'../sendbox_pem/app_private.txt'),'ascii')
 // 支付宝 公钥
-let alipayPublicKey = fs.readFileSync(path.join(__dirname,'../sendbox_pem/public_alipay.txt'),'ascii')
+let alipayPublicKey = fs.readFileSync(path.join(__dirname,'../sendbox_pem/alipay_public.txt'),'ascii')
 const alipayConfig = {
   appId:2016101500692746,
   privateKey:appPrivateKey,

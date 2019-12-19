@@ -22,7 +22,7 @@ let addUserOrder = async (data) => {
  * @param {arr} data  ['商品id','分类id','商品id','分类id']
  */
 let computed = async (data) => {
-  let sql = 'SELECT name,price,discountPrice FROM coffeecapsule WHERE id=? &&  classification=? UNION SELECT name,price,discountPrice FROM cmachineproducts WHERE id = ? && npsCommodity=?'
+  let sql = 'SELECT name,price,discountPrice FROM coffeecapsule WHERE id=? &&  classification=? UNION SELECT name,price,discountPrice FROM cmachineproducts WHERE cmachineproductsId = ? && npsCommodity=?'
   let result = query(sql, data).then((data) => {
     if (data.length > 0) {
       return data

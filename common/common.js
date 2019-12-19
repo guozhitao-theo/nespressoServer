@@ -30,6 +30,24 @@ const variEmail = (email) => {
   return reg.test(email)
 }
 /**
+ * 判断酸度等的范围
+ * @param {function} res 
+ * @param {arr} arr 
+ */
+const isRang = (res, arr) => {
+  let result = true
+  for(item of arr) {
+    if(item<1 || item>10) {
+      res.json({
+        status: 500,
+        message: item +'的范围为1-10'
+      })
+      result = false
+    }
+  }
+  return result
+}
+/**
  * 手机验证的封装方法
  * @param {String} phone  电话号码
  */
@@ -97,5 +115,6 @@ module.exports = {
   variEmail,
   isempty,
   variPhone,
-  createOrder
+  createOrder,
+  isRang
 }

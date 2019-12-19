@@ -13,7 +13,7 @@ var Storage = multer.diskStorage({
 })
 var upload = multer({ storage: Storage }).array("coffeeMachineimg", 5); 
 
-// 分页获取咖啡机列表
+// 获取咖啡机列表
 let getCoffeeMachineLists = async (req, res) => {
   let result = await data.getCoffeeMachineLists()
   if (result) {
@@ -49,7 +49,30 @@ let getCoffeeMachineBypage = async (req, res) => {
     })
   }
 }
-
+// 根据咖啡机的颜色获取
+let getCoffeeMachineByColor = async (req, res) => {
+  let color = Number(req.body.color || req.query.color)
+  // 颜色
+  if (color>8 || !color) {
+    return res.json({
+      status: 500,
+      message: '请输入正确的颜色'
+    })
+  }
+  let result = await data.getCoffeeMachineByColor(color)
+  if(result){
+    return res.json({
+      status: 200,
+      message: '按颜色获取咖啡机列表成功',
+      data: result
+    })
+  } else {
+    return res.json({
+      status: 500,
+      message: '该颜色无对应商品'
+    })
+  }
+}
 // 添加咖啡机商品
 let addCoffeeMachine = async (req, res) => {
   upload(req, res, async function(err) {
@@ -60,7 +83,20 @@ let addCoffeeMachine = async (req, res) => {
       })
     } else {
       let npsCommodity = Number(req.body.npsCommodity || req.query.npsCommodity)
+      if(npsCommodity>1 || npsCommodity<0) {
+        return res.json({
+          status: 500,
+          message: '请输入正确的商品分类'
+        })
+      }
       let color = Number(req.body.color || req.query.color)
+      console.log(color)
+      if(color>8 || color<1){
+        return res.json({
+          status: 500,
+          message: '无对应颜色商品'
+        })
+      }
       let price = req.body.price || req.query.price
       let discountPrice = req.body.discountPrice || req.query.discountPrice
       let specifications = Number(req.body.specifications || req.query.specifications)
@@ -100,6 +136,15 @@ let updateCoffeeMachine = async (req, res) => {
         message: '文件上传错误'
       })
     } else {
+      let id = Number(req.body.id || req.query.id)
+
+      let cmachineUpdate = await data.getCoffMachineById(id)
+      if (!cmachineUpdate) {
+        return res.json({
+          status: 500,
+          message: '不存在对应的商品'
+        })
+      }
       let npsCommodity = Number(req.body.npsCommodity || req.query.npsCommodity)
       let color = Number(req.body.color || req.query.color)
       let price = req.body.price || req.query.price
@@ -108,14 +153,41 @@ let updateCoffeeMachine = async (req, res) => {
       let manual = req.body.manual || req.query.manual
       let cmachineclass = Number(req.body.cmachineclass || req.query.cmachineclass)
       let name = req.body.name || req.query.name
-      let id = req.body.id || req.query.id
       let img = []
-      for (item of req.files) {
-        img.push(item.filename)
+      if (req.files) {
+        for (item of req.files) {
+          img.push(item.filename)
+        }
       }
       img = JSON.stringify(img)
-      let arr = [npsCommodity,color,img,price,discountPrice,specifications,manual,cmachineclass,name,id]
-      common.isempty(res,arr)
+      // 定义一个对象接受前端传的数据
+      let CmachineObject = {
+        npsCommodity,
+        color,
+        img,
+        price,
+        discountPrice,
+        specifications,
+        manual,
+        cmachineclass,
+        name
+      }
+      // 循环查询出的对象
+      for (props in CmachineObject) {
+        if(CmachineObject[props] === undefined) {
+          delete CmachineObject[props]
+        } else if(typeof(CmachineObject[props]) === 'Number' && isNaN(CmachineObject[props])) {
+          delete CmachineObject[props]
+        }
+      }
+      // 删除对象中的时间戳
+      delete cmachineUpdate[0].createTime
+      // 合并前端传的数据对象 以及原数据库的对象
+      let object = Object.assign({},cmachineUpdate[0],CmachineObject) 
+      // 将循环后的对象转成数组
+      let arr = Object.values(object)
+      arr.splice(0,1)
+      arr.push(id)
       let result = await data.updateCoffeeMachine(arr)
       if (result) {
         res.json({
@@ -140,6 +212,13 @@ let deleteCoffeeMachine = async (req, res) => {
     return res.json({
       status: 500,
       message: '没得删除的id'
+    })
+  }
+  let isExit = await data.getCoffMachineById(id)
+  if(!isExit) {
+    return res.json({
+      status: 500,
+      message: '这个id的商品不存在'
     })
   }
   let result = await data.deleteCoffeeMachine(id)
@@ -197,5 +276,6 @@ module.exports = {
   updateCoffeeMachine,
   deleteCoffeeMachine,
   getspecifications,
-  getcMachineClass
+  getcMachineClass,
+  getCoffeeMachineByColor
 }

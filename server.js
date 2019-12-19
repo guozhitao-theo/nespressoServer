@@ -46,6 +46,7 @@ app.post('/updateCoffeeMachine',router.updateCoffeeMachine)
 app.post('/deleteCoffeeMachine',router.deleteCoffeeMachine)
 app.post('/getspecifications',router.getspecifications)
 app.post('/getcMachineClass',router.getcMachineClass)
+app.post('/getCoffeeMachineByColor',router.getCoffeeMachineByColor)
 
 // 添加订单
 app.post('/addUserOrder',router.addUserOrder)

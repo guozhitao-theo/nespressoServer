@@ -173,6 +173,11 @@ let addcoffCap = async (req, res) => {
       let discountPrice = req.body.discountPrice || req.query.discountPrice
       let taste = req.body.taste || req.query.taste
       let img = []
+      // 判断酸度等的范围
+      let isRang = common.isRang(res, [strength, aroma, acidity, bitterness, alcohol, degreeofBaking])
+      if (!isRang) {
+        return false
+      }
       // 判断是否为咖啡胶囊
       if (classification === 1) {
         return res.json({
@@ -180,13 +185,6 @@ let addcoffCap = async (req, res) => {
           message: '请输入正确的分类，1 表示咖啡机， 2 表示咖啡胶囊'
         })
       }
-      console.log(classification)
-      console.log(name)
-      console.log(title)
-      console.log(description)
-      console.log(bakingDescription)
-      console.log(bitterness)
-      console.log(req.files)
       for (item of req.files) {
         img.push(item.filename)
       }
@@ -194,7 +192,6 @@ let addcoffCap = async (req, res) => {
       let arr = [classification, name, title, img, description, bakingDescription, placefOrigin, strength, capAmount, aroma, acidity, bitterness, alcohol, degreeofBaking, coffeeClassification, price, discountPrice, taste]
       common.isempty(res,arr)
       let result =await data.addCoffcap(arr)
-      console.log(result)
       if (result) {
         res.json({
           status: 200,
@@ -243,6 +240,17 @@ let updatecoffCap = async (req, res) => {
       let price = req.body.price || req.query.price
       let discountPrice = req.body.discountPrice || req.query.discountPrice
       let taste = req.body.taste || req.query.taste
+      let isRang = common.isRang(res, [strength, aroma, acidity, bitterness, alcohol, degreeofBaking])
+      if (!isRang) {
+        return false
+      }
+      // 判断是否为咖啡胶囊
+      if (classification === 1) {
+        return res.json({
+          status: 500,
+          message: '请输入正确的分类，1 表示咖啡机， 2 表示咖啡胶囊'
+        })
+      }
       if( req.files.length > 0) {
         var img = req.files[0].filename
       }
@@ -270,6 +278,8 @@ let updatecoffCap = async (req, res) => {
       // 遍历对象，当其键值对的值为undefined 的时候删除这个键值对
       for (props in getObject) {
         if (getObject[props] === undefined) {
+          delete getObject[props]
+        } else if (isNaN(getObject[props])) {
           delete getObject[props]
         }
       }
