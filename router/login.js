@@ -3,6 +3,18 @@ let data = require('../control/data')
 let md5 = require('md5')
 let sendemail = require('../control/email')
 let jwt =  require('jsonwebtoken')
+let multer = require('multer')
+// 配置 multer
+var inforS = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null,'./static/')
+  },
+  filename: function (req, file, callback) {
+    callback(null, 'infor/'+file.fieldname + "_" + Date.now() + "_" + file.originalname)
+  }
+})
+var upload = multer({ storage: inforS }).array("file", 5); 
+
 //  前端显示页面的登陆，注册
 // 判断账号是否已经注册
 const isRegisted = async (req, res) => {
@@ -196,7 +208,52 @@ const getUsers = async (req, res) => {
     })
   }
 }
-
+const infor = async (req, res) => {
+  upload(req, res, async (err) => {
+    if(err) {
+      return res.json({
+        status: 500,
+        message: '上传文件错误'
+      })
+    } else {
+      let value  = req.body.value || req.query.value
+      let name  = req.body.name || req.query.name
+      let surname = req.body.surname || req.query.surname
+      // let vip = req.body.vip || req.query.vip
+      let areaCode = req.body.areaCode || req.query.areaCode
+      let email = req.body.email || req.query.email
+      let call = req.body.call || req.query.call
+      let office = req.body.Office || req.query.Office
+      let infos = req.body.infos || req.query.infos
+      let values = req.body.values || req.query.values
+      let radio = req.body.radio || req.query.radio
+      let infoindex = req.body.InfoIndex || req.query.InfoIndex
+      let desc = req.body.desc || req.query.desc
+      let file = req.files[0].filename
+      let arr = [value, name,surname,areaCode,email,call,office,infos,values,radio,infoindex,desc,file]
+      console.log(arr)
+      common.isempty(res,arr)
+      let result = await data.infor(arr)
+      if(result) {
+        console.log(result)
+        return res.json({
+          status: 200,
+          message: '添加个人资料成功'
+        })
+      } else {
+        res.json({
+          status: 500,
+          message: '添加个人信息失败'
+        })
+      }
+      console.log('这在添加用户信息接口')
+      console.log(req.body)
+      res.json({
+        message: '接口完善中ing'
+      })
+    }
+  })
+}
 
 module.exports = {
   isRegisted,
@@ -205,5 +262,6 @@ module.exports = {
   login,
   islogin,
   pwdUpdate,
-  getUsers
+  getUsers,
+  infor
 }

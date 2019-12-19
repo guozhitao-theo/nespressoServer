@@ -48,9 +48,11 @@ app.post('/getspecifications',router.getspecifications)
 app.post('/getcMachineClass',router.getcMachineClass)
 app.post('/getCoffeeMachineByColor',router.getCoffeeMachineByColor)
 
+// 添加个人信息
+app.post('/infor',router.infor)
 // 添加订单
 app.post('/addUserOrder',router.addUserOrder)
-app.get('/public',router.payresult)
+app.get('/public/index.html',router.payresult)
 // 端口监听
 app.listen(3000,() => {
   console.log('port: 3000')

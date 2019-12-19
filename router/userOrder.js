@@ -78,7 +78,9 @@ let addUserOrder = async (req, res) => {
 }
 // 支付信息
 let payresult = (req, res) => {
+  console.log(req.query)
   console.log(req.body)
+  res.end("hahaha")
 }
 // 验签结果
 let notify = async (req, res) => {

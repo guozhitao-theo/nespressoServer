@@ -63,6 +63,7 @@ const changeinfor = async (data) => {
   return result
 
 }
+// 获取用户信息
 const getUser = async () => {
   let sql = 'select * from user'
   let result = query(sql).then((data) => {
@@ -74,10 +75,26 @@ const getUser = async () => {
   })
   return result
 }
+/**
+ * 添加个人资料
+ * @param {arr} data
+ */
+const infor = async (data) => {
+  let sql = 'insert into infor(title,firstName,lastName, chooseLocation,email, phone ,postCode ,MessageCategory , repliedLanguage, capsuleType ,subject ,message ,attachment) values(?,?,?,?,?,?,?,?,?,?,?,?,?)'
+  let result = await query(sql,data).then((data) => {
+    if(data) {
+      return true
+    } else {
+      return false
+    }
+  })
+  return result
+}
 module.exports = {
   isRegisted,
   registe,
   login,
   changeinfor,
-  getUser
+  getUser,
+  infor
 }
