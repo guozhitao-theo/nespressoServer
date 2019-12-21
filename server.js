@@ -18,7 +18,7 @@ app.post('/backRetrieve', router.backRetrieve)
 app.post('/backupdate', router.backupdate)
 app.post('/backIslogin', router.backIslogin)
 
-//前端页面登陆，注册接口
+// 前端页面登陆，注册接口
 app.post('/register', router.register)
 app.post('/login', router.login)
 app.post('/islogin', router.islogin)
@@ -53,6 +53,16 @@ app.post('/infor',router.infor)
 // 添加订单
 app.post('/addUserOrder',router.addUserOrder)
 app.get('/public/index.html',router.payresult)
+// 添加购物车
+app.get('/addCart',router.addCart)
+// 根据用户获取购物车列表
+app.get('/getCart', router.getCart)
+// 获取个人信息
+app.post('/getinfor', router.getinfor)
+// 获取购物车信息
+app.post('/getCartList', router.getCartList)
+// 获取订单信息
+app.post('/getOrderList', router.getOrderList)
 // 端口监听
 app.listen(3000,() => {
   console.log('port: 3000')

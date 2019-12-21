@@ -4,7 +4,7 @@ let query = require('../mysql')
  * 获取咖啡机的列表
  */
 let getCoffeeMachineLists = async () => {
-  let sql = 'SELECT * FROM cmachineproducts cMachine LEFT JOIN npscommodity ON  cMachine.npscommodity=npscommodity.`id` LEFT JOIN colorofmachine ON cMachine.color = colorofmachine.`id` LEFT JOIN specifications ON  cMachine.specifications=specifications.`id`'
+  let sql = 'SELECT * FROM cmachineproducts cMachine LEFT JOIN npscommodity ON  cMachine.npscommodity=npscommodity.`id` LEFT JOIN colorofmachine ON cMachine.color = colorofmachine.`id` LEFT JOIN specifications ON  cMachine.specifications=specifications.`id` order by createTime desc'
   let result = await query(sql).then((data) => {
     if (data.length > 0) {
       return data
@@ -43,10 +43,10 @@ let getCoffeeMachineByColor = async (data) => {
 
 /**
  * 添加咖啡机商品列表
- * @param {arr} data npsCommodity(int), color(int), img(varchar), price(double), discountPrice(double), specifications(int), manual(varchar), cmachineclass(int), NAME(varchar)
+ * @param {arr} data npsCommodity(int), color(int), cMachineImg(varchar), price(double), discountPrice(double), specifications(int), manual(varchar), cmachineclass(int), NAME(varchar)
  */
 let addCoffeeMachine = async (data) => {
-  let sql = 'INSERT INTO cmachineproducts(npsCommodity, color, img, price, discountPrice, specifications, manual, cmachineclass, NAME) VALUES(?,?,?,?,?,?,?,?,?)'
+  let sql = 'INSERT INTO cmachineproducts(npsCommodity, color, cMachineImg, price, discountPrice, specifications, manual, cmachineclass, NAME) VALUES(?,?,?,?,?,?,?,?,?)'
   let result = await query(sql, data).then((data) => {
     if (data) {
       return true
@@ -75,10 +75,10 @@ let getCoffMachineById = async (data) => {
 }
 /**
  * 修改咖啡机的数据
- * @param {arr} data  npsCommodity(int), color(int), img(varchar), price(double), discountPrice(double), specifications(int), manual(varchar), cmachineclass(int), NAME(varchar), id(int)
+ * @param {arr} data  npsCommodity(int), color(int), cMachineImg(varchar), price(double), discountPrice(double), specifications(int), manual(varchar), cmachineclass(int), NAME(varchar), id(int)
  */
 let updateCoffeeMachine = async (data) => {
-  let sql = 'update cmachineproducts set npsCommodity=?, color=?, img=?, price=?, discountPrice=?, specifications=?, manual=?, cmachineclass=?, name=? where id =?'
+  let sql = 'update cmachineproducts set npsCommodity=?, color=?, cMachineImg=?, price=?, discountPrice=?, specifications=?, manual=?, cmachineclass=?, name=? where cmachineproductsId =?'
   let result = await query(sql, data).then((data) => {
     if (data) {
       return true

@@ -13,7 +13,7 @@ var inforS = multer.diskStorage({
     callback(null, 'infor/'+file.fieldname + "_" + Date.now() + "_" + file.originalname)
   }
 })
-var upload = multer({ storage: inforS }).array("file", 5); 
+var upload = multer({ storage: inforS }).array("file", 5);
 
 //  前端显示页面的登陆，注册
 // 判断账号是否已经注册
@@ -22,7 +22,7 @@ const isRegisted = async (req, res) => {
   if (!email || !common.variEmail(email)) {
     return res.json({
       status: 500,
-      message: '请输入正确的信息'
+      message: '请输入正确的邮箱'
     })
   }
   let result = data.isRegisted(email)
@@ -59,6 +59,7 @@ const register = async (req, res) => {
   password = md5(password)
   let arr = [surname, name, email, password, distributeclass, title, location, address,
     city, postCode, phone, language, shippingNotes, deliveryAddress, subscription]
+  console.log(arr)
   common.isempty(res, arr)
   if (!common.variPhone(phone)) {
     return res.json({
@@ -70,6 +71,14 @@ const register = async (req, res) => {
     return res.json({
       status: 500,
       message:'请输入正确的邮箱'
+    })
+  }
+  let isRegisted = await data.isRegisted(email)
+  console.log(isRegisted)
+  if (!isRegisted) {
+    return res.json({
+      status: 500,
+      message: '邮箱已经注册'
     })
   }
   let result =await data.registe(arr)
@@ -135,6 +144,8 @@ const changeInfor = async (req,res) => {
 const login = async (req, res) => {
   let email = req.body.email || req.query.email
   let password = req.body.password || req.query.password
+  console.log(email)
+  console.log(password)
   let token = jwt.sign({password:password}, 'login', {expiresIn: 60*30})
   password = md5(password)
   common.isempty(res, [email, password])
@@ -169,7 +180,7 @@ const islogin = async (req, res) => {
         message: '登陆已失效'
       })
     }
-  })  
+  }) 
 }
 // 找回密码的回调函数
 const pwdUpdate = async (req,res) => {

@@ -16,7 +16,7 @@ const isRegisted = (data) => {
 }
 /**
  * 注册的数据库操作
- * @param {arr} data 
+ * @param {arr} data
  */
 const registe =async (data) => {
   let sql = 'insert into user(surname, name, email, password, distributeclass, title, location, address, city, postCode, phone, language, shippingNotes, deliveryAddress, subscription) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
@@ -90,11 +90,43 @@ const infor = async (data) => {
   })
   return result
 }
+/**
+ * 通过用户id判断用户是否存在
+ * @param {int} data 
+ */
+const isUser = async (data) => {
+  let sql = 'select * from user where id = ?'
+  let result = await query(sql, data).then((data) => {
+    if (data.length > 0) {
+      return data
+    } else {
+      return false
+    }
+  })
+  return result
+}
+/**
+ * 查询个人的信息
+ * @param {}
+ */
+const getInfor = async () => {
+  let sql = 'select * from infor order by createTime desc'
+  let result = await query(sql).then((data) => {
+    if (data.length > 0) {
+      return data
+    } else {
+      return false
+    }
+  })
+  return result
+}
 module.exports = {
   isRegisted,
   registe,
   login,
   changeinfor,
   getUser,
-  infor
+  infor,
+  isUser,
+  getInfor
 }

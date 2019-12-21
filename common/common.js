@@ -8,6 +8,8 @@ let alipay = new AlipaySDK(config.alipayConfig)
 // PC支付接口 alipay.trade.page.pay 返回的内容为 表单
 let AlipayFormData = require('alipay-sdk/lib/form').default
 
+// 定义网站跳转api
+let api = 'http://localhost:8080/#/'
 /**
  * 生成随机四位验证码
  */
@@ -100,7 +102,7 @@ const createOrder = async (goods) => {
   const formData = new AlipayFormData()
   // 调用 setMethod 并传入 get，会返回可以跳转到支付页面的 url
   formData.setMethod('get');
-  formData.addField('returnUrl','http://192.168.97.240:3000/public/index.html') // 客户支付成功之后会同步跳回的地址
+  formData.addField('returnUrl',api+'order/myorder') // 客户支付成功之后会同步跳回的地址
   formData.addField('notifyUrl','http://192.168.97.240:3000/public/')  // 支付宝在用户支付成功之后会异步通知的回调地址，必须在公网ip 才能收到
   formData.addField('bizContent', bizContent); // 将必要的参数集合添加进 form 表单
 

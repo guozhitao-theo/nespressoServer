@@ -1,6 +1,6 @@
 [TOC] 
 
- 
+ # 所有的接口都为 ==post==方式请求
 
 ### 1.  前端注册接口： http://192.168.97.240:3000/register
 
@@ -1172,7 +1172,9 @@
 
 # 订单
 
-### 26.  添加订单：http://192.168.97.240:3000/addUserOrder
+### 27.  添加订单：http://192.168.97.240:3000/addUserOrder
+
+### 类型：  ==x-www-form-urlencoded==
 
 ==前端需要发送的字段==：
 
@@ -1197,4 +1199,210 @@
 ```
 
 跳转链接为==result==的值
+
+### 28.  添加购物车：http://192.168.97.240:3000/addCart
+
+### 类型：  ==x-www-form-urlencoded==
+
+==前端需要发送的字段==：
+
+| Key    | Type   | Value 示例                                                   | Description                                                  |
+| ------ | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| userId | int    | 1                                                            | 用户id                                                       |
+| status | int    | 0                                                            | 订单状态,0表示在购物车，1表示已经付款                        |
+| goods  | string | [{"npscommodity":59,"commodity":2,"quantity":100},{"npscommodity":40,"commodity":1,"quantity":100}] | 传数组转成 的json字符串<br />对象中为一个商品，多个对象为多个商品，商品不能重复，<br />npscommodity：商品的id<br />commodity: 商品分类<br />quantity：商品数量 |
+
+​		
+
+### 29. 获取购物车：http://192.168.97.240:3000/getCart
+
+### 类型：  ==x-www-form-urlencoded==
+
+==前端需要发送的字段==：
+
+
+
+| Key    | Type | Value 示例 | Description                              |
+| ------ | ---- | ---------- | ---------------------------------------- |
+| userId | int  | 1          | 用户id                                  
+​ |
+​		==后台返回数据：==  
+
+```javascript
+{
+    "status": 200,
+    "message": "获取购物车列表成功",
+    "data": [
+        {
+            "addCartId": 3,
+            "npscommodity": 1,
+            "commodity": 40,
+            "userId": 1,
+            "quantity": 10,
+            "totalPrice": 1320,
+            "STATUS": "0",
+            "commodityName": "咖啡机",
+            "name": "咖啡机名",
+            "price": 102.2,
+            "discountPrice": 132,
+            "createTime": "2019-12-20T10:25:24.000Z",
+            "cmachineproductsId": 40,
+            "npsCommodity": 1,
+            "color": 4,
+            "cMachineImg": "[\"coffeeMachine/coffeeMachineimg_1576837524893_lists7.png\"]",
+            "specifications": 1,
+            "manual": "书明书链接",
+            "cmachineclass": 1
+        },
+        {
+            "addCartId": 1,
+            "npscommodity": 2,
+            "commodity": 59,
+            "userId": 1,
+            "quantity": 10,
+            "totalPrice": 1200,
+            "STATUS": "0",
+            "id": 59,
+            "commodityName": "咖啡胶囊",
+            "classification": 2,
+            "title": "你去看人家的哇嘎也",
+            "img": "[\"coffeeCap/img_1576661189875_002.jpg\",\"coffeeCap/img_1576661189876_007.jpg\",\"coffeeCap/img_1576661190209_008.jpg\"]",
+            "description": "娃娃啊",
+            "bakingDescription": "烘焙",
+            "placefOrigin": "中国",
+            "strength": 1,
+            "capAmount": 1,
+            "aroma": 12,
+            "acidity": 3,
+            "bitterness": 4,
+            "alcohol": 1,
+            "degreeofBaking": 3,
+            "coffeeClassification": 6,
+            "taste": "121211"
+        }
+    ]
+}
+```
+
+### 30. 获取订单列表：http://192.168.97.240:3000/getOrderList
+
+==后台返回数据：==  
+
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 58,
+            "npscommodity": 2,
+            "commodity": 59,
+            "userId": 1,
+            "quantity": 10,
+            "orderNumber": "1576738702885",
+            "totalPrice": 1200,
+            "status": "1",
+            "createTime": "2019-12-19T06:58:22.000Z"
+        }
+    ],
+    "message": "获取订单成功"
+}
+```
+
+### 31. 获取购物车列表：http://192.168.97.240:3000/getCartList
+
+==后台返回数据：==  
+
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "addCartId": 3,
+            "npscommodity": 1,
+            "commodity": 40,
+            "userId": 1,
+            "quantity": 10,
+            "totalPrice": 1320,
+            "STATUS": "0"
+        },
+        {
+            "addCartId": 1,
+            "npscommodity": 2,
+            "commodity": 59,
+            "userId": 1,
+            "quantity": 10,
+            "totalPrice": 1200,
+            "STATUS": "0"
+        }
+    ],
+    "message": "获取购物车列表成功"
+}
+```
+
+### 31. 获取用户信息：http://192.168.97.240:3000/getinfor
+
+==后台返回数据：==  
+
+```javascript
+{
+    "status": 200,
+    "message": "获取顾客信息成功",
+    "data": [
+        {
+            "inforId": 50,
+            "title": "小姐",
+            "firstName": "小白",
+            "lastName": "徐",
+            "customerNumber": null,
+            "chooseLocation": "中国香港 (Hong Kong)",
+            "email": "2310171316@qq.com",
+            "phone": "18334145203",
+            "postCode": "561000",
+            "MessageCategory": "订单信息与查询",
+            "repliedLanguage": "中文",
+            "capsuleType": "2",
+            "subject": "今天是星期一",
+            "message": "我是张三",
+            "attachment": "infor/file_1576810287011_Desert.jpg",
+            "createTime": "2019-12-21T07:36:09.000Z"
+        },
+        {
+            "inforId": 51,
+            "title": "小姐",
+            "firstName": "小白",
+            "lastName": "徐",
+            "customerNumber": null,
+            "chooseLocation": "中国香港 (Hong Kong)",
+            "email": "2310171316@qq.com",
+            "phone": "18334145203",
+            "postCode": "561000",
+            "MessageCategory": "订单信息与查询",
+            "repliedLanguage": "中文",
+            "capsuleType": "2",
+            "subject": "今天是星期一",
+            "message": "我是张三",
+            "attachment": "infor/file_1576810287035_Desert.jpg",
+            "createTime": "2019-12-21T07:36:09.000Z"
+        },
+        {
+            "inforId": 52,
+            "title": "先生",
+            "firstName": "西草佰",
+            "lastName": "徐",
+            "customerNumber": null,
+            "chooseLocation": "中国",
+            "email": "2310171316@qq.com",
+            "phone": "18334145203",
+            "postCode": "561000",
+            "MessageCategory": "产品信息",
+            "repliedLanguage": "中文",
+            "capsuleType": "1",
+            "subject": "飞得更高三个发",
+            "message": "放给三个",
+            "attachment": "infor/file_1576837176944_Koala.jpg",
+            "createTime": "2019-12-21T07:36:09.000Z"
+        }
+    ]
+}
+```
 

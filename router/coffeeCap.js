@@ -173,6 +173,13 @@ let addcoffCap = async (req, res) => {
       let discountPrice = req.body.discountPrice || req.query.discountPrice
       let taste = req.body.taste || req.query.taste
       let img = []
+      // 判断杯量范围
+      if(capAmount<1 || capAmount>4) {
+        return res.json({
+          status: 500,
+          message: '杯量超出范围'
+        })
+      }
       // 判断酸度等的范围
       let isRang = common.isRang(res, [strength, aroma, acidity, bitterness, alcohol, degreeofBaking])
       if (!isRang) {

@@ -90,7 +90,6 @@ let addCoffeeMachine = async (req, res) => {
         })
       }
       let color = Number(req.body.color || req.query.color)
-      console.log(color)
       if(color>8 || color<1){
         return res.json({
           status: 500,
@@ -130,14 +129,14 @@ let addCoffeeMachine = async (req, res) => {
 // 修改咖啡机商品列表
 let updateCoffeeMachine = async (req, res) => {
   upload(req, res,async function(err) {
+    console.log(err)
     if (err) {
       return res.json({
         status: 508,
         message: '文件上传错误'
       })
     } else {
-      let id = Number(req.body.id || req.query.id)
-
+      let id = Number(req.body.cmachineproductsId || req.query.cmachineproductsId)
       let cmachineUpdate = await data.getCoffMachineById(id)
       if (!cmachineUpdate) {
         return res.json({
@@ -153,18 +152,18 @@ let updateCoffeeMachine = async (req, res) => {
       let manual = req.body.manual || req.query.manual
       let cmachineclass = Number(req.body.cmachineclass || req.query.cmachineclass)
       let name = req.body.name || req.query.name
-      let img = []
+      let cMachineImg = []
       if (req.files) {
         for (item of req.files) {
-          img.push(item.filename)
+          cMachineImg.push(item.filename)
         }
       }
-      img = JSON.stringify(img)
+      cMachineImg = JSON.stringify(cMachineImg)
       // 定义一个对象接受前端传的数据
       let CmachineObject = {
         npsCommodity,
         color,
-        img,
+        cMachineImg,
         price,
         discountPrice,
         specifications,
