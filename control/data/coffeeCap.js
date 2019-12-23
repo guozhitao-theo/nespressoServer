@@ -301,7 +301,7 @@ let deleteCoffCap = async (data) => {
 
 // 咖啡胶囊的新增
 let addCoffcap = async (data) => {
-  let sql = 'insert into coffeeCapsule(classification, name, title,  img, description, bakingDescription, placefOrigin, strength, capAmount, aroma, acidity, bitterness, alcohol, degreeofBaking, coffeeClassification, price, discountPrice, taste) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+  let sql = 'insert into coffeeCapsule(classification, name, title,  img, description, bakingDescription, placefOrigin, strength, capAmount, aroma, acidity, bitterness, alcohol, degreeofBaking, coffeeClassification, price, discountPrice, taste, capsulePrice) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
   let result = query(sql,data).then((data) => {
     if (data) {
       return true
@@ -318,7 +318,7 @@ let addCoffcap = async (data) => {
  */
 let updateCoffCap = async (data) => {
   console.log(data)
-  let sql = 'update coffeecapsule set classification=?, NAME=?, title=?,  img=?, description=?, bakingDescription=?, placefOrigin=?, strength=?, capAmount=?, aroma=?, acidity=?, bitterness=?, alcohol=?, degreeofBaking=?, coffeeClassification=?, price=?, discountPrice=?, taste=? where id=?'
+  let sql = 'update coffeecapsule set classification=?, NAME=?, title=?,  img=?, description=?, bakingDescription=?, placefOrigin=?, strength=?, capAmount=?, aroma=?, acidity=?, bitterness=?, alcohol=?, degreeofBaking=?, coffeeClassification=?, price=?, discountPrice=?, taste=?, capsulePrice=? where id=?'
   let result =await query(sql,data).then((data) => {
     if (data) {
       console.log(data)

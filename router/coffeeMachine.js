@@ -110,7 +110,7 @@ let addCoffeeMachine = async (req, res) => {
         img.push(item.filename)
       }
       img = JSON.stringify(img)
-      let arr = [npsCommodity,color,img,price,discountPrice,specifications,manual,cmachineclass,name]
+      let arr = [npsCommodity,color,img,price,discountPrice,specifications,manual,cmachineclass,name,price]
       common.isempty(res,arr)
       let result = await data.addCoffeeMachine(arr)
       if (result) {
@@ -172,6 +172,7 @@ let updateCoffeeMachine = async (req, res) => {
         specifications,
         manual,
         cmachineclass,
+        machinePrice: price,
         name
       }
       // 循环查询出的对象

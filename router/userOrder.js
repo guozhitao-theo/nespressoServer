@@ -4,6 +4,9 @@ let data = require('../control/data/data')
 let checkSign = require('../common/checkSign')
 // 添加订单的回调函数
 let addUserOrder = async (req, res) => {
+  if(common.isLogin(req, res)) {
+    return false
+  }
   let userId = Number(req.body.userId || req.query.userId)
   let status = req.body.status || req.query.status
   let goods = req.body.goods || req.query.goods
@@ -28,9 +31,9 @@ let addUserOrder = async (req, res) => {
       let priceResult = await data.computed(getPrice) 
       if (priceResult) {
         let price = priceResult[0].price
-        let discountPrice = priceResult[0].discountPrice
+        // let discountPrice = priceResult[0].discountPrice
         // 计算单个商品的总价
-        totalprice = discountPrice * quantity
+        totalprice = price * quantity
         allTotal += totalprice
         // 生成订单号
         let adduserOrderArr = [npscommodity, commodity, userId, quantity, orderNumber, totalprice, status]
@@ -93,6 +96,9 @@ let notify = async (req, res) => {
 }
 // 添加购物车
 let addCart = async (req, res) => {
+  if(common.isLogin(req, res)) {
+    return false
+  }
   let userId = Number(req.body.userId || req.query.userId)
   let status = req.body.status || req.query.status
   let goods = req.body.goods || req.query.goods  
@@ -175,6 +181,9 @@ let addCart = async (req, res) => {
 }
 // 获取购物车列表
 let getCart = async (req, res) => {
+  if(common.isLogin(req, res)) {
+    return false
+  }
   let userId = Number(req.body.userId || req.query.userId)
   console.log('获取购物车列表接口被请求')
   console.log(userId)

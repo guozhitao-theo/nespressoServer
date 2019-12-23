@@ -114,7 +114,6 @@ const createOrder = async (goods) => {
 }
 // 在headers里获取token 并进行表单验证 
 const isLogin =(req, res) => {
-  let isLogin = true
   console.log(req.headers)
   let token = req.headers.token
   console.log(token)
@@ -124,14 +123,11 @@ const isLogin =(req, res) => {
   // 对token进行解码查看是否过期
   jwt.verify(token, 'login', (err,decode) => {
     if(err) {
-      isLogin = false
-      return res.json ({
-        status: 503,
-        message: '登陆已失效'
+      res.set({
+        // token 为1 说明登录失效
+        token: '1'
       })
     }
-    console.log(isLogin)
-    return isLogin
   }) 
 }
 module.exports = {

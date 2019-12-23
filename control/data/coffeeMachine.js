@@ -46,7 +46,7 @@ let getCoffeeMachineByColor = async (data) => {
  * @param {arr} data npsCommodity(int), color(int), cMachineImg(varchar), price(double), discountPrice(double), specifications(int), manual(varchar), cmachineclass(int), NAME(varchar)
  */
 let addCoffeeMachine = async (data) => {
-  let sql = 'INSERT INTO cmachineproducts(npsCommodity, color, cMachineImg, price, discountPrice, specifications, manual, cmachineclass, NAME) VALUES(?,?,?,?,?,?,?,?,?)'
+  let sql = 'INSERT INTO cmachineproducts(npsCommodity, color, cMachineImg, price, discountPrice, specifications, manual, cmachineclass, NAME, machinePrice) VALUES(?,?,?,?,?,?,?,?,?,?)'
   let result = await query(sql, data).then((data) => {
     if (data) {
       return true

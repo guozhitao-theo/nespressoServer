@@ -15,11 +15,9 @@ var coffeeCapStorage = multer.diskStorage({
 var upload = multer({ storage: coffeeCapStorage }).array("img", 5)
 // 获取咖啡胶囊列表
 let getCoffgCapLists = async (req, res) => {
-  // console.log(!common.isLogin(req, res))
-  // if(common.isLogin(req, res)) {
-  //   return false
-  // }
+  common.isLogin(req, res)
   let result = await data.getCoffCapLists()
+  console.log(result)
   if (result) {
     res.json({
       status: 200,
@@ -200,7 +198,7 @@ let addcoffCap = async (req, res) => {
         img.push(item.filename)
       }
       img = JSON.stringify(img)
-      let arr = [classification, name, title, img, description, bakingDescription, placefOrigin, strength, capAmount, aroma, acidity, bitterness, alcohol, degreeofBaking, coffeeClassification, price, discountPrice, taste]
+      let arr = [classification, name, title, img, description, bakingDescription, placefOrigin, strength, capAmount, aroma, acidity, bitterness, alcohol, degreeofBaking, coffeeClassification, price, discountPrice, taste, price]
       common.isempty(res,arr)
       let result =await data.addCoffcap(arr)
       if (result) {
@@ -284,6 +282,7 @@ let updatecoffCap = async (req, res) => {
         price: price,
         discountPrice: discountPrice,
         taste: taste,
+        capsulePrice: price,
         img
       }
       // 遍历对象，当其键值对的值为undefined 的时候删除这个键值对
