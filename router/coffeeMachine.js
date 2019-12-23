@@ -15,6 +15,9 @@ var upload = multer({ storage: Storage }).array("coffeeMachineimg", 5);
 
 // 获取咖啡机列表
 let getCoffeeMachineLists = async (req, res) => {
+  // if(!common.isLogin(req, res)) {
+  //   return false
+  // }
   let result = await data.getCoffeeMachineLists()
   if (result) {
     res.json({

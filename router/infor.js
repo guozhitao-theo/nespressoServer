@@ -1,6 +1,7 @@
 // 获取个人信息
 let data = require('../control/data/login')
 const getinfor = async (req, res) => {
+  common.isLogin(req, res)
   let result = await data.getInfor()
   if (result) {
     return res.json({

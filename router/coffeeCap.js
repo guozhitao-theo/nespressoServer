@@ -12,9 +12,13 @@ var coffeeCapStorage = multer.diskStorage({
     callback(null, 'coffeeCap/'+file.fieldname + "_" + Date.now() + "_" + file.originalname)
   }
 })
-var upload = multer({ storage: coffeeCapStorage }).array("img", 5); 
+var upload = multer({ storage: coffeeCapStorage }).array("img", 5)
 // 获取咖啡胶囊列表
 let getCoffgCapLists = async (req, res) => {
+  // console.log(!common.isLogin(req, res))
+  // if(common.isLogin(req, res)) {
+  //   return false
+  // }
   let result = await data.getCoffCapLists()
   if (result) {
     res.json({

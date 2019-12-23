@@ -144,9 +144,8 @@ const changeInfor = async (req,res) => {
 const login = async (req, res) => {
   let email = req.body.email || req.query.email
   let password = req.body.password || req.query.password
-  console.log(email)
+  let token = jwt.sign({password:password}, 'login', {expiresIn: 60*3})
   console.log(password)
-  let token = jwt.sign({password:password}, 'login', {expiresIn: 60*30})
   password = md5(password)
   common.isempty(res, [email, password])
   let result = await data.login([email, password])

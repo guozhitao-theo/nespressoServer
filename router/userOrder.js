@@ -176,6 +176,8 @@ let addCart = async (req, res) => {
 // 获取购物车列表
 let getCart = async (req, res) => {
   let userId = Number(req.body.userId || req.query.userId)
+  console.log('获取购物车列表接口被请求')
+  console.log(userId)
   if (!userId) {
     return res.json({
       status: 500,
@@ -183,6 +185,7 @@ let getCart = async (req, res) => {
     })
   }
   let result = await data.getCart(userId)
+  console.log(result)
   // 数据处理，删除所有的值为null的键 result 是一个数组
   for (item of result) {
     for(props in item) {

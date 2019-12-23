@@ -1,5 +1,8 @@
-// 公共方法的封装
+// 定义网站跳转api
+let api = 'http://localhost:8080/#/'
 
+// 公共方法的封装
+let jwt =  require('jsonwebtoken')
 // 导入sdk环境
 const AlipaySDK = require('alipay-sdk').default
 const config = require('../config/config')
@@ -7,9 +10,6 @@ const config = require('../config/config')
 let alipay = new AlipaySDK(config.alipayConfig)
 // PC支付接口 alipay.trade.page.pay 返回的内容为 表单
 let AlipayFormData = require('alipay-sdk/lib/form').default
-
-// 定义网站跳转api
-let api = 'http://localhost:8080/#/'
 /**
  * 生成随机四位验证码
  */
@@ -112,11 +112,34 @@ const createOrder = async (goods) => {
   })
   return result
 }
+// 在headers里获取token 并进行表单验证 
+const isLogin =(req, res) => {
+  let isLogin = true
+  console.log(req.headers)
+  let token = req.headers.token
+  console.log(token)
+  if (token === 'undefined') {
+    isLogin = false
+  }
+  // 对token进行解码查看是否过期
+  jwt.verify(token, 'login', (err,decode) => {
+    if(err) {
+      isLogin = false
+      return res.json ({
+        status: 503,
+        message: '登陆已失效'
+      })
+    }
+    console.log(isLogin)
+    return isLogin
+  }) 
+}
 module.exports = {
   variCode,
   variEmail,
   isempty,
   variPhone,
   createOrder,
-  isRang
+  isRang,
+  isLogin
 }

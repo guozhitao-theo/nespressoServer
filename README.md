@@ -1222,10 +1222,11 @@
 
 
 
-| Key    | Type | Value 示例 | Description                              |
-| ------ | ---- | ---------- | ---------------------------------------- |
-| userId | int  | 1          | 用户id                                  
-​ |
+| Key    | Type | Value 示例 | Description |
+| ------ | ---- | ---------- | ----------- |
+| userId | int  | 1          | 用户id      |
+​                   
+
 ​		==后台返回数据：==  
 
 ```javascript

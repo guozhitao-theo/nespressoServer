@@ -56,7 +56,7 @@ app.get('/public/index.html',router.payresult)
 // 添加购物车
 app.get('/addCart',router.addCart)
 // 根据用户获取购物车列表
-app.get('/getCart', router.getCart)
+app.post('/getCart', router.getCart)
 // 获取个人信息
 app.post('/getinfor', router.getinfor)
 // 获取购物车信息
