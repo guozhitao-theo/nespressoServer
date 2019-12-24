@@ -317,11 +317,9 @@ let addCoffcap = async (data) => {
  * @param {arr} data 
  */
 let updateCoffCap = async (data) => {
-  console.log(data)
   let sql = 'update coffeecapsule set classification=?, NAME=?, title=?,  img=?, description=?, bakingDescription=?, placefOrigin=?, strength=?, capAmount=?, aroma=?, acidity=?, bitterness=?, alcohol=?, degreeofBaking=?, coffeeClassification=?, price=?, discountPrice=?, taste=?, capsulePrice=? where id=?'
   let result =await query(sql,data).then((data) => {
     if (data) {
-      console.log(data)
       return true
     } else {
       return false

@@ -59,7 +59,6 @@ const register = async (req, res) => {
   password = md5(password)
   let arr = [surname, name, email, password, distributeclass, title, location, address,
     city, postCode, phone, language, shippingNotes, deliveryAddress, subscription]
-  console.log(arr)
   common.isempty(res, arr)
   if (!common.variPhone(phone)) {
     return res.json({
@@ -74,7 +73,6 @@ const register = async (req, res) => {
     })
   }
   let isRegisted = await data.isRegisted(email)
-  console.log(isRegisted)
   if (!isRegisted) {
     return res.json({
       status: 500,
@@ -97,7 +95,6 @@ const register = async (req, res) => {
 }
 // 修改个人信息回调函数
 const changeInfor = async (req,res) => {
-  console.log(11111)
   let surname = req.body.surname || req.query.surname
   let name = req.body.name || req.query.name
   let email = req.body.email || req.query.email
@@ -112,7 +109,6 @@ const changeInfor = async (req,res) => {
   let arr = [surname, name, distributeclass, title, location, address,
     city, postCode, phone, shippingNotes, email]
   common.isempty(res, arr)
-  console.log(arr)
   if (!common.variPhone(phone)) {
     return res.json({
       status: 500,
@@ -144,8 +140,7 @@ const changeInfor = async (req,res) => {
 const login = async (req, res) => {
   let email = req.body.email || req.query.email
   let password = req.body.password || req.query.password
-  let token = jwt.sign({password:password}, 'login', {expiresIn: 60*3})
-  console.log(password)
+  let token = jwt.sign({password:password}, 'login', {expiresIn: 60*10})
   password = md5(password)
   common.isempty(res, [email, password])
   let result = await data.login([email, password])
@@ -241,11 +236,9 @@ const infor = async (req, res) => {
       let desc = req.body.desc || req.query.desc
       let file = req.files[0].filename
       let arr = [value, name,surname,areaCode,email,call,office,infos,values,radio,infoindex,desc,file]
-      console.log(arr)
       common.isempty(res,arr)
       let result = await data.infor(arr)
       if(result) {
-        console.log(result)
         return res.json({
           status: 200,
           message: '添加个人资料成功'
@@ -256,8 +249,6 @@ const infor = async (req, res) => {
           message: '添加个人信息失败'
         })
       }
-      console.log('这在添加用户信息接口')
-      console.log(req.body)
       res.json({
         message: '接口完善中ing'
       })

@@ -55,7 +55,6 @@ const backisAdm = async (data) => {
 const backRetrieve = async (data) => {
   let sql = 'insert into retrievepwd(email, veriCode) values(?,?)'
   let result = await query(sql, data).then((data) => {
-    console.log(data)
     if(data) {
       return true
     } else {

@@ -15,9 +15,6 @@ var upload = multer({ storage: Storage }).array("coffeeMachineimg", 5);
 
 // 获取咖啡机列表
 let getCoffeeMachineLists = async (req, res) => {
-  // if(!common.isLogin(req, res)) {
-  //   return false
-  // }
   let result = await data.getCoffeeMachineLists()
   if (result) {
     res.json({
@@ -132,7 +129,6 @@ let addCoffeeMachine = async (req, res) => {
 // 修改咖啡机商品列表
 let updateCoffeeMachine = async (req, res) => {
   upload(req, res,async function(err) {
-    console.log(err)
     if (err) {
       return res.json({
         status: 508,
@@ -185,9 +181,11 @@ let updateCoffeeMachine = async (req, res) => {
       }
       // 删除对象中的时间戳
       delete cmachineUpdate[0].createTime
+     
       // 合并前端传的数据对象 以及原数据库的对象
       let object = Object.assign({},cmachineUpdate[0],CmachineObject) 
       // 将循环后的对象转成数组
+      delete object.machinePrice
       let arr = Object.values(object)
       arr.splice(0,1)
       arr.push(id)

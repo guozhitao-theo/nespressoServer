@@ -12,10 +12,7 @@ let addUserOrder = async (req, res) => {
   let goods = req.body.goods || req.query.goods
   // 定义一个变量表示价格计算状态
   let count = 1
-  console.log(goods)
   goods = JSON.parse(goods)
-  console.log(goods)
-
   let totalprice = NaN
   let allTotal = 0
   // 以时间戳作为订单号，保证唯一性
@@ -83,15 +80,12 @@ let addUserOrder = async (req, res) => {
 }
 // 支付信息
 let payresult = (req, res) => {
-  console.log(req.query)
-  console.log(req.body)
   res.end("hahaha")
 }
 // 验签结果
 let notify = async (req, res) => {
   let result = await checkSign(postData)
   if(result){
-    console.log('订单支付成功')
   }
 }
 // 添加购物车
@@ -99,11 +93,15 @@ let addCart = async (req, res) => {
   if(common.isLogin(req, res)) {
     return false
   }
-  let userId = Number(req.body.userId || req.query.userId)
-  let status = req.body.status || req.query.status
+  let userId = req.body.userId
+  let status = req.body.status
   let goods = req.body.goods || req.query.goods  
-  console.log(goods)
+  console.log(req.body.status)
+  console.log(req.body.userId)
+  console.log('1111111111111111111111')
   goods = JSON.parse(goods)
+  console.log(userId)
+  console.log(status)
   console.log(goods)
   // 定义总价
   let totalprice = 1
@@ -125,7 +123,8 @@ let addCart = async (req, res) => {
     })
   }
   // 判断当前状态
-  if (status !== '0') {
+  console.log('status'+status)
+  if (status !== 0) {
     return res.json({
       status: 500,
       message: '现在是加入购物车，status状态应该为 1'
@@ -133,7 +132,6 @@ let addCart = async (req, res) => {
   }
   if (goods.length>0) {
     for(item of goods) {
-      console.log(item)
       let npscommodity = Number(item.npscommodity)
       let commodity = Number(item.commodity)
       let quantity = Number(item.quantity)
@@ -145,7 +143,7 @@ let addCart = async (req, res) => {
         let price = priceResult[0].price
         let discountPrice = priceResult[0].discountPrice
         // 计算单个商品的总价
-        totalprice = discountPrice * quantity
+        totalprice = price * quantity
         allTotal += totalprice
         // 生成订单
         let addCartArr = [npscommodity, commodity, userId, quantity, totalprice, status]
@@ -185,8 +183,6 @@ let getCart = async (req, res) => {
     return false
   }
   let userId = Number(req.body.userId || req.query.userId)
-  console.log('获取购物车列表接口被请求')
-  console.log(userId)
   if (!userId) {
     return res.json({
       status: 500,
@@ -199,10 +195,12 @@ let getCart = async (req, res) => {
   for (item of result) {
     for(props in item) {
       if(!item[props]) {
+        console.log(props, item[props])
         delete item[props]
       }
     }
   }
+  console.log(result)
   if (result) {
     res.json({
       status: 200,

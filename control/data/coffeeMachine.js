@@ -85,8 +85,6 @@ let updateCoffeeMachine = async (data) => {
     } else {
       return false
     }
-  }).catch((err) => {
-    return err
   })
   return result
 }

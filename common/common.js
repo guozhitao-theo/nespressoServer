@@ -114,9 +114,7 @@ const createOrder = async (goods) => {
 }
 // 在headers里获取token 并进行表单验证 
 const isLogin =(req, res) => {
-  console.log(req.headers)
   let token = req.headers.token
-  console.log(token)
   if (token === 'undefined') {
     isLogin = false
   }

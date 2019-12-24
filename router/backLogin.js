@@ -43,7 +43,6 @@ const backRetrieve = async (req, res) => {
 const backupdate = async (req, res) => {
   let email = req.body.email || req.query.email
   let variCode = req.body.variCode || req.query.variCode
-  console.log('传的验证码',variCode)
   let password = req.body.password || req.query.password
   if (!email || !common.variEmail(email)) {
     return res.json({
@@ -106,8 +105,6 @@ const backLogin =async (req, res) => {
   password = md5(password)
   let arr = [user,password]
   let result = await query.backLogin(arr)
-  console.log('在登陆接口')
-  console.log(result)
   if (result) {
     res.json({
       status: 200,

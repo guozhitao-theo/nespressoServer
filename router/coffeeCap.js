@@ -15,13 +15,13 @@ var coffeeCapStorage = multer.diskStorage({
 var upload = multer({ storage: coffeeCapStorage }).array("img", 5)
 // 获取咖啡胶囊列表
 let getCoffgCapLists = async (req, res) => {
-  common.isLogin(req, res)
+  console.log(111)
   let result = await data.getCoffCapLists()
   console.log(result)
   if (result) {
     res.json({
       status: 200,
-      data:result,
+      data: result,
       message: '获取商品成功'
     })
   } else {
@@ -240,7 +240,7 @@ let updatecoffCap = async (req, res) => {
       let placefOrigin = req.body.placefOrigin || req.query.placefOrigin
       let strength = Number(req.body.strength || req.query.strength)
       let capAmount = Number(req.body.capAmount || req.query.capAmount)
-      let aroma = Number(req.body.aroma || req.query.aroma)
+      let aroma = Number(req.body.aroma || req.query.aroma) || 1
       let acidity = Number(req.body.acidity || req.query.acidity)
       let bitterness = Number(req.body.bitterness || req.query.bitterness)
       let alcohol = Number(req.body.alcohol || req.query.alcohol)
@@ -260,9 +260,11 @@ let updatecoffCap = async (req, res) => {
           message: '请输入正确的分类，1 表示咖啡机， 2 表示咖啡胶囊'
         })
       }
+      let img = []
       if( req.files.length > 0) {
-        var img = req.files[0].filename
+        img.push(req.files[0].filename)
       }
+      img = JSON.stringify(img)
       // 定义一个对象存放传过来的数据
       let getObject = {
         classification: classification,
@@ -289,12 +291,13 @@ let updatecoffCap = async (req, res) => {
       for (props in getObject) {
         if (getObject[props] === undefined) {
           delete getObject[props]
-        } else if (isNaN(getObject[props])) {
+        } else if ((typeof(getObject[props]) ==='Number' || getObject[props] === 'NaN') && isNaN(getObject[props])) {
           delete getObject[props]
         }
       }
       // 删除原数据中的时间戳
       delete getcoffCap[0].createTime
+      delete getcoffCap[0].capsulePrice
       let changeCoffeeCap = Object.assign({},getcoffCap[0],getObject)
       let arr = Object.values(changeCoffeeCap)
       arr.splice(0,1)
@@ -332,7 +335,6 @@ let deletecoffCap = async (req, res) => {
     })
   } 
   let result = await data.deleteCoffCap(id)
-  console.log(result)
   if (result) {
     res.json({
       status: 200,
